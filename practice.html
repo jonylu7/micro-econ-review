@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>中階個經 · 思考題自我評測</title>
+<style>
+:root{
+  --bg:#0f1115;--surface:#181b22;--surface2:#20242e;--line:#2b3040;
+  --ink:#e8eaf0;--muted:#9aa3b5;--accent:#6ea8fe;--accent2:#f0b354;
+  --feynman:#4ade80;--essay:#c084fc;--radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang TC","Noto Sans TC",system-ui,sans-serif;line-height:1.6}
+body{padding-bottom:80px}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+header{position:sticky;top:0;z-index:20;background:rgba(15,17,21,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hbar{display:flex;align-items:center;gap:10px;padding:12px 16px;max-width:760px;margin:0 auto}
+.htitle{font-size:16px;font-weight:700}
+.htitle small{display:block;font-size:11px;color:var(--muted);font-weight:400}
+.nav{margin-left:auto;display:flex;gap:8px}
+.nav a{font-size:12px;color:var(--accent);text-decoration:none;padding:6px 10px;border:1px solid var(--line);border-radius:8px}
+.filters{display:flex;gap:6px;padding:12px 16px;max-width:760px;margin:0 auto;overflow-x:auto}
+.fbtn{flex:0 0 auto;padding:7px 14px;border-radius:99px;background:var(--surface);border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:600;cursor:pointer}
+.fbtn.on{background:var(--accent);color:#0b1020;border-color:var(--accent)}
+.intro{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:16px 0;font-size:13.5px;color:var(--muted)}
+.intro b{color:var(--ink)}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.qmeta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.chip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px}
+.chip.ch{background:var(--surface2);color:var(--accent)}
+.chip.feynman{background:rgba(74,222,128,.15);color:var(--feynman)}
+.chip.essay{background:rgba(192,132,252,.15);color:var(--essay)}
+.qtopic{font-size:12px;color:var(--muted)}
+.qtext{font-size:15.5px;line-height:1.75;margin-bottom:12px;font-weight:500}
+.ans{width:100%;min-height:120px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:12px;font-size:14.5px;font-family:inherit;line-height:1.6;resize:vertical}
+.ans:focus{outline:none;border-color:var(--accent)}
+.qactions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.btn{border:none;border-radius:10px;padding:10px 16px;font-size:13.5px;font-weight:700;cursor:pointer;transition:.15s}
+.btn-primary{background:var(--accent);color:#0b1020}
+.btn-primary:active{transform:scale(.97)}
+.btn-ghost{background:var(--surface2);color:var(--ink);border:1px solid var(--line)}
+.hint{font-size:12px;color:var(--muted);margin-top:8px;display:none}
+.hint.show{display:block}
+.footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0}
+.count{font-size:12px;color:var(--muted);padding:4px 0 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="hbar">
+    <div class="htitle">思考題自我評測 <small>費曼式 + 申論式 · 忠於 Varian 課文</small></div>
+    <div class="nav"><a href="index.html">← 複習</a></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="intro">
+    <b>怎麼用：</b>先自己寫答案在框裡 → 按「<b>產生評分 → 複製並開 ChatGPT</b>」→ 到 ChatGPT 貼上（Ctrl/Cmd+V）送出，就會得到一位個經老師的 0–5 分評分＋評語＋修正方向。<br>
+    <span style="color:var(--feynman)">● 費曼式</span>：用自己的話解釋直覺　<span style="color:var(--essay)">● 申論式</span>：結合概念推理
+  </div>
+  <div class="filters" id="filters"></div>
+  <div class="count" id="count"></div>
+  <div id="list"></div>
+  <div class="footer">68 題 · 依 Varian《Intermediate Microeconomics》各章課文出題</div>
+</div>
+
+<script id="QDATA" type="application/json">{
+  "questions": [
+    {
+      "chapter": 1,
+      "topic": "帕累托效率與分配",
+      "type": "feynman",
+      "q": "用你自己的話解釋：在沒有外部性等市場失靈、且獨占者能實施完全（第一級）價格歧視時，為什麼其產量可能和競爭市場一樣達到帕累托效率，兩者的剩餘分配卻截然不同？請說清楚帕累托效率在乎什麼、不在乎什麼，並用這個例子說明它為何「對分配議題保持沉默」。"
+    },
+    {
+      "chapter": 1,
+      "topic": "保留價格與租金管制",
+      "type": "essay",
+      "q": "假設政府對市中心公寓設定具有約束力的租金上限 p_max<p*。請結合保留價格、供給量與消費者剩餘分析：短缺出現後，公寓若未分配給願付價格最高者，為何可能產生配置無效率？相較於競爭均衡，哪些房東願意出租且房客願意承租的互利交易可能消失？請區分「出租數量減少」與「既有公寓分配錯置」兩種效率損失。"
+    },
+    {
+      "chapter": 2,
+      "topic": "預算線與相對價格",
+      "type": "feynman",
+      "q": "不要只寫公式。請用自己的話解釋：預算線斜率 −p₁/p₂ 為什麼表示多取得一單位財貨 1 必須放棄多少單位財貨 2？以 p₁=6、p₂=3 為例，說清楚這項市場交換率與機會成本的直覺。"
+    },
+    {
+      "chapter": 2,
+      "topic": "貨幣幻覺與相對價格",
+      "type": "essay",
+      "q": "若所有價格 (p1, p2) 與所得 m 同時等比例上升 10%,消費者的預算集合與最適選擇會如何變化？請用「只有相對價格重要」的原理說明什麼是貨幣幻覺,並評論「員工不喜歡減薪,但名目減薪是否等於實質減薪」這句話。"
+    },
+    {
+      "chapter": 3,
+      "topic": "單調性與凸性",
+      "type": "feynman",
+      "q": "用你自己的話解釋：若兩種財貨都是「愈多愈好」，為什麼通過內點消費束的無異曲線不能向上傾斜？再解釋嚴格凸偏好（strictly convex preferences）的直覺：為什麼兩個同樣好的消費束之間的混合，會比任一端點更受偏好？請勿把凸性誤解成所有人都偏好兩種財貨數量相等。"
+    },
+    {
+      "chapter": 3,
+      "topic": "邊際替代率MRS",
+      "type": "essay",
+      "q": "邊際替代率（marginal rate of substitution, MRS）描述消費者在效用不變下，願意用一種財貨替換另一種財貨的邊際比率。請說明為何嚴格凸偏好通常表現為沿無異曲線移動時 MRS 的絕對值遞減，以及這如何反映對多樣化的偏好。若無異曲線是平行直線，MRS 有何特性？兩財貨是什麼關係？"
+    },
+    {
+      "chapter": 4,
+      "topic": "序數效用與MRS不變性",
+      "type": "feynman",
+      "q": "用你自己的話解釋序數效用與基數效用的差別,並說明為什麼把效用函數 u 換成 v=2u(或任何遞增變換)都不影響消費者的選擇。進一步論證:為什麼邊際效用 MU 會隨效用函數改變,但 MRS = -MU1/MU2 卻不會改變？"
+    },
+    {
+      "chapter": 4,
+      "topic": "完全替代與擬線性偏好",
+      "type": "essay",
+      "q": "考慮效用函數 u(x1,x2)=x1/2 + x2(完全替代),以及擬線性偏好 u(x1,x2)=v(x1)+x2。請分別推導其 MRS,並說明兩者的無異曲線形狀有何差異。為什麼擬線性偏好在後續分析(如消費者剩餘)中特別好用？"
+    },
+    {
+      "chapter": 5,
+      "topic": "最適選擇的充要條件",
+      "type": "feynman",
+      "q": "課堂強調：在不加上內點、可微、凸偏好等條件時，相切既不是最適的必要條件，也不是充分條件。請用自己的話各舉一個反例：最適但不相切（如角解或拗折偏好），以及相切但不是全域最適（如非凸偏好）。最後解釋一般判準：「不存在買得起且嚴格優於候選束 A 的消費束」為何能刻畫最適選擇。"
+    },
+    {
+      "chapter": 5,
+      "topic": "定額稅vs從量稅",
+      "type": "essay",
+      "q": "政府若要籌到固定稅收,可選擇對財貨1課從量稅 t(使價格變 p1+t),或課徵一筆等額的定額(所得)稅 R*=t·x1*。請用預算線與最適選擇證明:為什麼對消費者而言,能收到同樣稅收的定額稅會讓消費者處於「弱優於」從量稅的效用水準？這對稅制設計有何啟示？"
+    },
+    {
+      "chapter": 6,
+      "topic": "所得效果與Engel曲線",
+      "type": "feynman",
+      "q": "用你自己的話解釋正常財與劣等財的差別,並說明為什麼同一種財貨(如公車)可能在低所得時是正常財、在高所得時變成劣等財。請描述所得提供曲線(IOC)與 Engel 曲線分別是把「什麼」對「什麼」連起來,兩者如何看同一件事。"
+    },
+    {
+      "chapter": 6,
+      "topic": "季芬財與需求曲線斜率",
+      "type": "essay",
+      "q": "一般需求曲線向下傾斜,但季芬財(Giffen good)的需求曲線卻可能向上。請結合價格提供曲線(POC)與需求曲線的概念,說明價格變動如何拆解成替代效果與所得效果,並論證季芬財必須具備什麼條件(與劣等財的關係)才可能出現向上傾斜的需求。"
+    },
+    {
+      "chapter": 7,
+      "topic": "顯示性偏好與WARP",
+      "type": "feynman",
+      "q": "用你自己的話解釋「直接顯示性偏好」的意思:當我們只觀察到消費者的『選擇』而看不到他心裡的『偏好』時,如何從『他買得起 (y1,y2) 卻選了 (x1,x2)』推論出他偏好 x 勝過 y？再說明弱顯示性偏好公理(WARP)為什麼是『理性極大化行為』的邏輯結果。"
+    },
+    {
+      "chapter": 7,
+      "topic": "間接顯示性偏好與偏好復原",
+      "type": "essay",
+      "q": "若觀察到 (x1,x2) 直接顯示偏好於 (y1,y2),且 (y1,y2) 直接顯示偏好於 (z1,z2),我們可推得 (x1,x2) 間接顯示偏好於 (z1,z2)。請說明這種『選擇的傳遞鏈』如何幫助我們在不假設任何效用函數的情況下,反推出消費者無異曲線的上下界。這體現了顯示性偏好理論相對於傳統效用理論的什麼優點？"
+    },
+    {
+      "chapter": 8,
+      "topic": "Slutsky 分解：替代效果與所得效果",
+      "type": "feynman",
+      "q": "用你自己的話解釋：當某商品價格上升時，Slutsky 把總效果拆成「替代效果」與「所得效果」。請說明我們為什麼要先「pivot」預算線讓原始最適束剛好還買得起（維持購買力不變），再「shift」到新的所得水準，這兩個步驟各自捕捉了什麼直覺？為什麼替代效果一定與價格變動反方向（weakly negative）？"
+    },
+    {
+      "chapter": 8,
+      "topic": "退稅與淨福利、劣等財需求曲線",
+      "type": "essay",
+      "q": "政府對財貨 1 課徵每單位 t 的稅，並將該消費者實際繳納的稅額 R=t·x₁′以定額方式退還給他，使稅後選擇 x′的總支出剛好可負擔。請用顯示性偏好或 Slutsky 補償的圖形論證：相較於課稅前，消費者為何弱變差，且財貨 1 的需求弱減少；在何種情況下結論是嚴格的？再說明劣等財的所得效果必須大於反向的替代效果，才會成為季芬財（Giffen good）。"
+    },
+    {
+      "chapter": 9,
+      "topic": "稟賦所得效果與買賣行為",
+      "type": "feynman",
+      "q": "在「買與賣」的模型中，消費者靠出售自己擁有的稟賦來賺取所得，因此除了一般所得效果外還多出一個「稟賦所得效果」。請用蘋果果農的例子，用自己的話解釋：當蘋果價格上升時，為什麼果農（淨供給者）反而『可能吃更多蘋果』？把 Slutsky 恆等式中 SE、OIE、EIE 三項的方向講清楚。"
+    },
+    {
+      "chapter": 9,
+      "topic": "後彎的勞動供給曲線",
+      "type": "essay",
+      "q": "工資 w 上升時，勞動供給不必然增加。請把閒暇視為一種財貨，分解工資上升的替代效果與所得效果，論證為何當閒暇是正常財且所得效果足夠大時，勞動供給會後彎。再以超過原工時後才適用的加班工資（overtime wage）說明：若原選擇仍可負擔，為何此制度能在不降低原效用的情況下提高增加工時的誘因；請勿直接把它等同於一般工資上升的「純替代效果」。"
+    },
+    {
+      "chapter": 10,
+      "topic": "跨期選擇與實質利率",
+      "type": "feynman",
+      "q": "在兩期消費模型中，預算線可以寫成 c1 + c2/(1+ρ) = m1 + m2/(1+ρ)，其中 ρ 是實質利率。請用自己的話解釋：為什麼『今天放棄一單位 c1，明天能換到 (1+ρ) 單位 c2』？也就是說，實質利率如何同時是跨期的相對價格與消費的機會成本？名目利率 r 與通膨如何一起決定 ρ？"
+    },
+    {
+      "chapter": 10,
+      "topic": "借款者與貸款者的 Slutsky 分解",
+      "type": "essay",
+      "q": "利率上升對一個人的第一期消費影響，取決於他是借款者還是貸款者。請用跨期 Slutsky 方程式論證：為什麼對『借款者』(m1−c1<0) 而言，在第一期消費為正常財的假設下，利率上升會使今天消費『確定減少』；而對『貸款者』(m1−c1>0) 而言總效果卻方向不明？把替代效果與稟賦所得效果的符號講清楚。"
+    },
+    {
+      "chapter": 11,
+      "topic": "資產定價與淨現值為零",
+      "type": "feynman",
+      "q": "課文說，在無套利且風險相同的條件下，資產價格應等於其未來現金流的現值，因此以市場價格買進的淨現值（net present value, NPV）為零。請把這件事和「何時砍樹」連起來：為什麼應比較樹木價值的邊際成長率與利率 r，並在繼續生長一期間的報酬不再高於資金機會成本時砍伐？哪些假設使這個比較成立？"
+    },
+    {
+      "chapter": 11,
+      "topic": "市場對未來資訊的即時反應",
+      "type": "essay",
+      "q": "若市場今天確知六週後石油每加侖可賣 1.5 元，請結合儲存成本、利息、風險與套利，推導今天價格不能長期低於該未來價格的適當折現值。說明為何新資訊會在被得知時反映於現價，而不是等事件發生才反映；現價上升又如何促使今日節約用油並尋找替代品？"
+    },
+    {
+      "chapter": 12,
+      "topic": "期望效用與或有消費計畫",
+      "type": "feynman",
+      "q": "請用自己的話解釋『或有消費計畫 (contingent consumption plan)』是什麼，以及為什麼期望效用函數 u=π1·v(c1)+π2·v(c2) 這種形式很特別。特別說明：為什麼 v(·) 是凹函數 (concave) 就代表風險趨避？並解釋為什麼把期望效用做正的仿射轉換 f(u)=au+b 之後，仍然是期望效用函數。"
+    },
+    {
+      "chapter": 12,
+      "topic": "公平保險下的完全投保與 Allais 悖論",
+      "type": "essay",
+      "q": "設損失發生機率為 p，每投保 1 元損失所付保費為 γ。請以兩種狀態的消費與無異曲線—預算線圖論證：當保險精算公平（actuarially fair），即 γ=p 時，嚴格風險趨避者為何選擇完全投保，使兩種狀態的消費相等？若 γ>p，為何一般只會部分投保或不投保，而不能無條件斷言一定部分投保？最後用 Allais 悖論說明實際選擇如何違反期望效用理論的獨立性公理（independence axiom）。"
+    },
+    {
+      "chapter": 14,
+      "topic": "消費者剩餘與需求曲線下面積",
+      "type": "feynman",
+      "q": "課文說：對『準線性偏好 (quasilinear)』而言，需求曲線下的面積就等於消費者若能免費取得商品時的效用變化。請用自己的話推導：為什麼把每一單位的保留價格 (r1, r2, r3) 減去價格 p 加總，會等於 v(3)−v(0)−3p，也就是需求與價格之間的面積？為什麼準線性偏好讓這個度量特別『乾淨』？"
+    },
+    {
+      "chapter": 14,
+      "topic": "補償變量 vs 等值變量與 CS 的近似誤差",
+      "type": "essay",
+      "q": "當偏好不是準線性時，普通（Marshallian）需求曲線下面積所算的消費者剩餘變化通常只是福利變化的近似。請精確定義補償變量（compensating variation, CV）與等值變量（equivalent variation, EV），並以價格下降為例，說明它們各以新價格或舊價格評價效用變化。再用所得效果解釋 ΔCS、CV、EV 為何可能不同；請指出需求曲線面積不必一律高估福利變化，其排序取決於財貨是正常財或劣等財及價格變動方向。"
+    },
+    {
+      "chapter": 15,
+      "topic": "市場需求、彈性與邊際收益",
+      "type": "feynman",
+      "q": "請用自己的話推導 MR=p(1−1/|ε|)，並解釋：為什麼 |ε|>1 時 MR>0、|ε|=1 時 MR=0、|ε|<1 時 MR<0？對反需求 p=a−by，證明需求線中點的數量是 y=a/(2b)、價格是 p=a/2，且此處為單位彈性。最後區分「收益極大化」與「利潤極大化」，說明邊際成本非負的廠商為何不會在需求缺乏彈性的區段選擇正產量。"
+    },
+    {
+      "chapter": 15,
+      "topic": "所得彈性的加權平均為 1",
+      "type": "essay",
+      "q": "在所有所得都花完、價格固定且需求可微的情況下，從預算恆等式 Σpᵢxᵢ=m 推導：各商品所得彈性的支出占比加權平均等於 1。據此說明為何不可能所有有正支出占比的商品之所得彈性都大於 1，也不可能全都小於 1。最後釐清正常財、劣等財、必需品與奢侈品依所得彈性如何分類。"
+    },
+    {
+      "chapter": 16,
+      "topic": "市場均衡與帕累托效率",
+      "type": "feynman",
+      "q": "用你自己的話解釋：為什麼當消費者對額外一單位的邊際願付價格（marginal willingness to pay, MWTP）高於生產者的邊際成本（也可視為邊際願售價格，marginal willingness to accept, MWTA）時，配置尚未達到帕累托效率？請設計一個含交易價格的具體情境，說明為何雙方都能因增加這筆交易而變好。"
+    },
+    {
+      "chapter": 16,
+      "topic": "生產者間的成本效率",
+      "type": "essay",
+      "q": "兩位生產者目前的邊際成本分別為 MC₁=5、MC₂=4。請用微小產量調整說明：在總產量不變下，將一單位（或足夠小的一單位）生產由廠商 1 移給廠商 2，為何在局部近似下可節省 1 元成本？再說明競爭市場的 p=MC 條件如何使仍在生產的廠商邊際成本相等，並指出這項成本最小化結論所需的凸技術等條件。"
+    },
+    {
+      "chapter": 17,
+      "topic": "辛普森悖論與選擇偏誤",
+      "type": "feynman",
+      "q": "Simpson 悖論指一個趨勢在各分組中成立、合併後卻消失或反轉。請用你自己的話直覺地解釋這是怎麼發生的，並以「使用折價券的人本身就較價格敏感」為例，說明為何從這種自我選擇樣本推論到全體人口會產生偏誤。"
+    },
+    {
+      "chapter": 17,
+      "topic": "需求曲線的識別",
+      "type": "essay",
+      "q": "價格與數量是供需共同決定的。請推理說明：若不同觀察中供給與需求都可能移動，為何均衡點的散布不能直接當成一條需求曲線？說明一個只移動供給、且不直接影響需求的外生變數如何幫助識別（identify）需求；並指出「與供給相關」本身還不夠，它還必須滿足外生性與排除限制。"
+    },
+    {
+      "chapter": 18,
+      "topic": "第二價格拍賣與誠實出價",
+      "type": "feynman",
+      "q": "在獨立私有價值的第二價格（Vickrey）拍賣中，誠實申報自己的估值是弱優勢策略。請把最高的他人出價固定，分別討論它低於或高於你的估值時，為何高報或低報都不可能帶來更高報酬，卻可能造成不該得標或錯失有利得標。也請說明：只有在得標身分不變時，你的出價才不影響付款。"
+    },
+    {
+      "chapter": 18,
+      "topic": "共同價值拍賣與贏家詛咒",
+      "type": "essay",
+      "q": "在共同價值拍賣中，每位競標者的估值為 v+e_i。請推理說明為何「按估值出價」會導致贏家的詛咒(winner's curse)：得標者往往是誤差 e_i 最大的人。並解釋為何競標人數越多，你越應該壓低(shade)你的出價。"
+    },
+    {
+      "chapter": 19,
+      "topic": "邊際技術替代率與邊際產量",
+      "type": "feynman",
+      "q": "邊際技術替代率 MRTS 被定義為 -MP1/MP2。請用你自己的話解釋這個等式的直覺：當你多用一點要素1、想維持產量 y 不變時，你能少用多少要素2？並說明為何這與消費者理論中的 MRS 在數學結構上如出一轍。"
+    },
+    {
+      "chapter": 19,
+      "topic": "技術的凸性",
+      "type": "essay",
+      "q": "若投入組合 x 與 z 都至少能生產 y，凸技術表示任一加權平均 tx+(1−t)z（0≤t≤1）也至少能生產 y。請用「把不同生產方法按比例混合」的想法解釋此假設；再區分凸性與固定規模報酬，說明為何凸性並不要求把所有投入加倍就恰好使產量加倍。"
+    },
+    {
+      "chapter": 20,
+      "topic": "Value of marginal product = factor price",
+      "type": "feynman",
+      "q": "短期利潤最大化的一階條件是 p·MP1(x1*,k)=w1。請用你自己的話解釋這個條件的直覺，並說明：若 p·MP1 > w1 或 < w1，廠商各應如何調整要素1的用量，以及為何調整會停在等號成立之處。"
+    },
+    {
+      "chapter": 20,
+      "topic": "Constant returns and zero long-run profit",
+      "type": "essay",
+      "q": "課本用「等比例擴大投入」論證：在固定規模報酬（constant returns to scale, CRS）、價格給定且可自由調整規模時，若某生產計畫有正利潤，將它任意倍增便可使利潤任意大，因此不存在有限的利潤最大化解。請完整重述此推理，並說明在自由進出的長期競爭均衡中，為何經濟利潤為零；同時區分這項結論的假設與會計利潤。"
+    },
+    {
+      "chapter": 21,
+      "topic": "成本最小化的切點條件",
+      "type": "feynman",
+      "q": "成本最小化的切點條件可改寫為 MP1/w1 = MP2/w2。請用你自己的話解釋這個「每一元花在要素1或要素2上都應帶來相同額外產出」的直覺，並說明若此等式不成立，廠商該如何重新配置支出以降低成本。"
+    },
+    {
+      "chapter": 21,
+      "topic": "短期成本與長期成本",
+      "type": "essay",
+      "q": "課本論證：若短期固定要素 x2 恰好等於長期成本最小化的水準 x2(y)，則短期成本會等於長期成本 cs(x2(y),y)=c(y)。請用反證法推理：為何不可能出現 cs(x2(y),y) > c(y)？請點出「短期也能選擇 x1(y)」這一步在論證中的關鍵作用。"
+    },
+    {
+      "chapter": 22,
+      "topic": "平均成本與邊際成本的關係",
+      "type": "feynman",
+      "q": "課本推導出 dAVC/dy = [MC - AVC]/y。請用你自己的話解釋為何『MC 低於 AVC 時 AVC 下降、MC 高於 AVC 時 AVC 上升、兩者相等時 AVC 平坦』，並用一個班上平均分數與新同學分數的比喻讓完全沒學過經濟的人也懂這個邊際-平均關係。"
+    },
+    {
+      "chapter": 22,
+      "topic": "邊際成本下面積與長短期邊際成本",
+      "type": "essay",
+      "q": "以 c_v(y)=y²、固定成本 F=1 為例，先算出 AVC、AC 與 MC，並說明為何從 0 到 y 的 MC 曲線下面積等於變動成本（使用 c_v(0)=0）。再設短期成本為 c_s(y,\u0305x₂)，長期選擇 \u0305x₂=x₂(y) 使成本最小，運用包絡定理說明為何在該產量上長期 MC 與相應短期 MC 相等；請清楚指出被設為零的是固定要素選擇的一階條件，而不是 MC 本身。"
+    },
+    {
+      "chapter": 23,
+      "topic": "廠商供給曲線與停業決策",
+      "type": "feynman",
+      "q": "請你向一位剛學過會計的朋友解釋：為什麼廠商的短期供給曲線只是邊際成本曲線『位於平均變動成本之上』的那一段？特別是，當價格低於 AVC 時廠商為何選擇停業（生產 y=0）而不是繼續照 p=MC 生產？請用『固定成本已經是沉沒成本』的直覺把這件事講清楚。"
+    },
+    {
+      "chapter": 23,
+      "topic": "生產者剩餘的三種衡量",
+      "type": "essay",
+      "q": "課本指出生產者剩餘可寫成收益減變動成本，也可寫成價格線以下、供給（邊際成本）曲線以上的面積。請在 c_v(0)=0 下證明 c_v(y)=∫₀ʸMC(q)dq。再以 c(y)=y²+1 為例，先檢查停業條件，推導 p≥0 時的短期供給 S(p)=p/2，計算生產者剩餘，並說明它與利潤相差固定成本 1。"
+    },
+    {
+      "chapter": 24,
+      "topic": "長期產業供給與自由進出",
+      "type": "essay",
+      "q": "為什麼短期產業供給可以直接把各廠商供給水平加總，長期卻不能？請推理說明：在自由進出下，長期均衡價格為何會被壓到『與非負利潤相容的最低價格』（約等於最低平均成本）。並解釋此時廠商『零經濟利潤』為何不代表產業消失或老闆沒有收入。"
+    },
+    {
+      "chapter": 25,
+      "topic": "獨占的無謂損失與低度生產",
+      "type": "feynman",
+      "q": "獨占者的最適條件是 p(y)+p'(y)y=MC(y)，效率條件卻是 p(y)=MC(y)。請你像對高中生說明一樣，解釋『多賣一單位必須對之前所有單位降價』這件事如何讓 MR 低於價格，進而導致獨占者相對於社會最適『生產不足』，並說明由此產生的無謂損失（deadweight loss）究竟損失了誰的什麼。"
+    },
+    {
+      "chapter": 25,
+      "topic": "彈性、加成定價與租稅轉嫁",
+      "type": "essay",
+      "q": "由 MR=p(y)[1-1/|ε|] 出發，推導獨占定價為邊際成本的加成 p=MC/[1-1/|ε|]，並解釋為何獨占者絕不會在需求彈性 |ε|<1 的區段營運。進一步：在需求為固定彈性、邊際成本固定的情況下，為何獨占者對從量稅 t 的轉嫁會『超過』t 本身？這與線性需求下只轉嫁 t/2 的結論為何不同？"
+    },
+    {
+      "chapter": 26,
+      "topic": "一級價格歧視與效率",
+      "type": "feynman",
+      "q": "在能知道每單位願付價格、禁止轉售且無交易成本的第一級（完全）價格歧視下，獨占者可逐單位收取願付價格。請用自己的話解釋：為何廠商會持續供應到邊際願付價格等於邊際成本，使總剩餘（total surplus）極大且沒有無謂損失？再說明「有效率」不代表「分配公平」：此時消費者剩餘與生產者剩餘如何分配？"
+    },
+    {
+      "chapter": 26,
+      "topic": "三級價格歧視的彈性法則",
+      "type": "essay",
+      "q": "獨占者能分隔兩個不可轉售的市場時，內點最適滿足 MR₁=MC=MR₂。請在兩市場面對相同且固定的邊際成本、並於各自有彈性的需求區段營運等條件下，由 Lerner 指數推導彈性絕對值較小的市場價格較高。再說明：若所有消費者需求相同且廠商能收取個別固定費，二部定價為何可將使用價格設為 MC，再以入場費取得消費者剩餘；若消費者異質，這項結論為何需要調整？"
+    },
+    {
+      "chapter": 27,
+      "topic": "獨買（monopsony）的要素僱用",
+      "type": "essay",
+      "q": "獨買者僱用要素的最適條件為 pf'(x)=w(x)+w'(x)x。請解釋等式右邊為何多出 w'(x)x 這一項，並用『因為要素供給向上傾斜，多僱一單位必須對先前所有單位付更高工資』的邏輯，說明邊際支出 ME 為何高於平均支出 AE(=w)。相對於競爭性要素市場，獨買會造成要素僱用量與工資如何偏離？"
+    },
+    {
+      "chapter": 27,
+      "topic": "邊際收益產品與要素需求",
+      "type": "feynman",
+      "q": "請解釋邊際收益產品（marginal revenue product, MRP）MRP=MR·MP_L 的意義，以及在可微需求下為何可寫成 p(y)[1−1/|ε|]·MP_L。若比較兩家具有相同技術、相同要素價格與相同產品需求條件的廠商，說明產品市場獨占力造成 MR<p，如何使其勞動需求低於價格接受者；並指出若這些條件不同，不能僅憑「有獨占力」斷言實際僱用量必較少。"
+    },
+    {
+      "chapter": 28,
+      "topic": "Stackelberg 與 Cournot 的比較",
+      "type": "essay",
+      "q": "以線性需求 p=a-bY、成本為零為例，請說明 Stackelberg 領導者為何要用『倒推法』先代入跟隨者的反應函數 y2=(a-by1)/2b 再求解，並推導出領導者產量 y1=a/2b、跟隨者 y2=a/4b。接著對照 Cournot 模型『在預期中求均衡（兩條反應曲線交點）』的邏輯，解釋為什麼先行者能藉由承諾較大產量而獲得優勢——這個『先動優勢』的來源是什麼？"
+    },
+    {
+      "chapter": 28,
+      "topic": "卡特爾的作弊誘因與重複賽局",
+      "type": "essay",
+      "q": "設兩家同成本廠商組成卡特爾，並以每期利潤 π_m（合作）、π_d（當期偏離）與 π_c（懲罰期的 Cournot 利潤）表示報酬。先由聯合利潤極大化條件說明：固定對手產量時，單家通常有偷偷增產的誘因。再以貼現因子 δ 比較 π_m/(1−δ) 與 π_d+δπ_c/(1−δ)，推導觸發策略能維持合作的條件；若改用利率 r 且 δ=1/(1+r)，再改寫條件。最後說明同質產品、相同固定邊際成本、無產能限制的 Bertrand 模型為何得到 p=MC。"
+    },
+    {
+      "chapter": 29,
+      "topic": "囚犯困境與 Nash 均衡",
+      "type": "feynman",
+      "q": "請向朋友解釋：囚犯困境裡雙方都『背叛』為何是 Nash 均衡，而這個結果卻讓兩人都比合作更差？請點出 Nash 均衡的兩個核心要件——『最適反應』與『信念正確（與對手實際策略一致）』——並說明它與『反覆剔除嚴格劣勢策略』的關係。"
+    },
+    {
+      "chapter": 29,
+      "topic": "空洞威脅與子賽局完全均衡",
+      "type": "essay",
+      "q": "課本用『老師威脅學生退掉其他課、否則不准考期末』的例子指出：某些 Nash 均衡靠的是永遠不會被檢驗的『空洞威脅』。請用該退課賽局 (Drop→(2,5)；Don't Drop→Bar (0,-5) / Don't Bar (4,2)) 以倒推法求出子賽局完全均衡（SPNE），並解釋為何 SPNE 能排除這種不可信威脅所支撐的 Nash 均衡。"
+    },
+    {
+      "chapter": 31,
+      "topic": "錨定效應與行為經濟學",
+      "type": "feynman",
+      "q": "請向一位只學過標準理性選擇模型的同學解釋「錨定效應」（anchoring）：為什麼把學號末兩位數當作出價起點，會影響人們對一塊巧克力的願付價格？這個現象與理性偏好理論中「偏好不受無關資訊影響」的假設有何衝突？"
+    },
+    {
+      "chapter": 31,
+      "topic": "時間不一致性與雙曲折現",
+      "type": "essay",
+      "q": "在指數折現（exponential discounting）下，個人在第1期看第2、3期之間的MRS，與到了第2期再看時是相同的，故決策具「時間一致性」。請以雙曲折現（hyperbolic discounting）為例，推理為何折現方式的改變會導致「時間不一致」，並說明這如何解釋人們一再拖延或未能遵守自己先前的儲蓄與戒菸計畫。"
+    },
+    {
+      "chapter": 32,
+      "topic": "第一福利定理的證明邏輯",
+      "type": "essay",
+      "q": "請以純交換經濟重述第一福利定理的反證邏輯：若競爭均衡配置 x 不是帕累托效率配置，便存在可行的帕累托改善 x′；在局部非飽和偏好下，每位消費者若弱偏好 xᵢ′於均衡束 xᵢ，則其支出不能低於財富，且至少一位嚴格改善者的支出嚴格較高。把個人不等式加總，說明為何與總資源可行性矛盾。最後列出價格接受、完整市場、無外部性與局部非飽和等關鍵前提。"
+    },
+    {
+      "chapter": 32,
+      "topic": "Walras法則與相對價格",
+      "type": "feynman",
+      "q": "在純交換的 Edgeworth 方盒中，為什麼 (p₁,p₂) 與 (2p₁,2p₂) 表示同一組相對價格與預算集合？再由 Walras 法則 Σpᵢzᵢ(p)=0 說明：若 n−1 個市場都出清，且第 n 種財貨價格嚴格為正，為何最後一個市場也必須出清？這對價格正規化與求解一般均衡有何實用意義？"
+    },
+    {
+      "chapter": 33,
+      "topic": "生產效率與MRTS均等",
+      "type": "essay",
+      "q": "課文以投入面的Edgeworth box說明：兩廠商生產有效率時MRTS須相等，並舉例若 MRTS_LK^F=2 > MRTS_LK^C=0.5，則應把一單位L由C移至F、一單位K由F移至C，使兩者產出皆增。請推理為何MRTS不等時必存在「雙贏」的要素重配置，並說明這與消費面「MRS須均等」的效率條件在直觀上是同一回事。"
+    },
+    {
+      "chapter": 34,
+      "topic": "Arrow不可能定理",
+      "type": "feynman",
+      "q": "請向同學解釋 Arrow 不可能定理：當至少有三個選項且個人偏好可以任意排列時，不存在同時滿足偏好定義域不受限、帕累托原則、無關選項獨立性與非獨裁性的社會排序規則。請用多數決可能出現 x 勝 y、y 勝 z、z 又勝 x 的循環說明集體偏好為何可能不具傳遞性。最後討論：實際制度若要避免不可能結果，可能放寬哪些條件；請勿把「必然放棄某一特定條件」當成定理本身。"
+    },
+    {
+      "chapter": 34,
+      "topic": "社會福利函數與公平配置",
+      "type": "essay",
+      "q": "課文比較功利主義 W=Σuᵢ 與 Rawls 式 W=min{u₁,…,uₙ} 兩種社會福利函數，並將公平配置（fair allocation）界定為同時具有效率與無嫉妒（envy-free）。請推理：(1) 若社會福利函數對每個人的效用都嚴格遞增，為何其最大化配置必具帕累托效率？(2) 兩種福利準則各隱含何種倫理判斷？(3) 無嫉妒與帕累托效率分別處理分配的哪一面向？"
+    },
+    {
+      "chapter": 35,
+      "topic": "外部性與皮古稅",
+      "type": "essay",
+      "q": "設污染廠商的產量為 s，每單位產量伴隨一單位排放；其私人邊際成本為 PMC(s)，對下游造成的邊際外部損害為 MED(s)。請比較私人條件 p=PMC(s) 與社會條件 p=PMC(s)+MED(s)，推導每單位皮古稅（Pigouvian tax）應如何在社會最適排放量 s* 設為 t=MED(s*)。若產量與排放可分離，這個公式應如何改寫？最後說明估計邊際損害與選定正確稅率的實務困難。"
+    },
+    {
+      "chapter": 35,
+      "topic": "污染券與共有資源",
+      "type": "feynman",
+      "q": "課文說明可交易的污染券（pollution vouchers）能達成成本最小化，因為只要兩廠商減污的邊際成本 |c₁'| 與 |c₂'| 不相等，透過買賣配額就能降低總成本。請用最直白的方式解釋：市場交易如何自動讓「各廠商減污邊際成本相等」的效率條件成立？並用「村莊捕魚以平均而非邊際報酬決策」的例子說明共有資源為何被過度使用。"
+    },
+    {
+      "chapter": 37,
+      "topic": "公共財效率條件與搭便車",
+      "type": "essay",
+      "q": "課文用兩位室友是否買電視的0-1決策導出：只要 r₁+r₂ ≥ c 就該買，並推廣為公共財的效率條件 |MRS_{G,x1}|+|MRS_{G,x2}| = c'(G)（各人MRS加總）。請解釋為何公共財的效率條件是「MRS加總」而私有財是「MRS相等」，並推理在自願提供下為何會出現搭便車（free-rider）與提供不足。"
+    },
+    {
+      "chapter": 37,
+      "topic": "Clarke-Groves機制的誠實揭露",
+      "type": "feynman",
+      "q": "在二元公共財的 Clarke–Groves 關鍵者機制中，每人申報公共財帶來的淨價值；機制依申報總和決定是否提供，並向能改變決策結果的關鍵者收取其決策對其他人造成的外部成本。請固定其他人的申報，分別討論某人是否為關鍵者，解釋為何誠實申報是弱優勢策略：謊報若不改變結果便無利可圖，若改變結果則可能使自己承擔超過所得利益的稅或錯失淨利益。"
+    },
+    {
+      "chapter": 38,
+      "topic": "逆選擇",
+      "type": "feynman",
+      "q": "請向同學解釋保險市場的「逆選擇」（adverse selection）：當投保人握有自己風險高低的私人資訊、而保險公司無法區辨時，為什麼高風險者會買到「相對於其真實風險過於便宜」的保單，並使市場逐漸被高風險者主導？這如何說明隱藏資訊會傷害未被告知的市場參與者？"
+    },
+    {
+      "chapter": 38,
+      "topic": "委託代理與IR、IC限制",
+      "type": "essay",
+      "q": "在委託代理模型中，設努力 e 造成成本 c(e)，產出具有隨機性，契約依可觀察產出支付工資 w(y)。請比較努力可觀察與不可觀察兩種情況：前者如何直接指定努力並滿足參與限制（individual rationality, IR），後者為何還必須使代理人選擇目標努力，即滿足誘因相容限制（incentive compatibility, IC）。請以期望效用寫出 IR 與 IC 的一般形式，說明產出風險與風險趨避如何造成保險與誘因的取捨；最後討論團體連帶責任貸款如何利用同儕篩選與監督緩解逆選擇或道德風險。"
+    }
+  ]
+}
+</script>
+<script>
+const QS = JSON.parse(document.getElementById('QDATA').textContent).questions;
+const GRADE_PROMPT = `請你以一個大學部個體經濟學老師的立場評判以下問題與回答：
+1. 請以經濟直覺、邏輯推導方面評斷
+2. 不要過度延伸題目想受試者表達的方面
+3. 以 0~5 分評斷
+4. 並且最後提供評語，以及可能的修正方向的提點。`;
+
+const LSKEY='micro_practice_ans_v1';
+let saved = JSON.parse(localStorage.getItem(LSKEY)||'{}');
+let filter='all';
+
+function saveAns(i,v){saved[i]=v;localStorage.setItem(LSKEY,JSON.stringify(saved));}
+
+function chapters(){const s=[...new Set(QS.map(q=>q.chapter))].sort((a,b)=>a-b);return s;}
+
+function renderFilters(){
+  const f=document.getElementById('filters');
+  let html=`<div class="fbtn ${filter==='all'?'on':''}" onclick="setF('all')">全部</div>`;
+  html+=`<div class="fbtn ${filter==='feynman'?'on':''}" onclick="setF('feynman')">費曼式</div>`;
+  html+=`<div class="fbtn ${filter==='essay'?'on':''}" onclick="setF('essay')">申論式</div>`;
+  chapters().forEach(c=>{html+=`<div class="fbtn ${filter==='ch'+c?'on':''}" onclick="setF('ch${c}')">Ch${c}</div>`;});
+  f.innerHTML=html;
+}
+function setF(v){filter=v;renderFilters();renderList();window.scrollTo(0,0);}
+
+function match(q){
+  if(filter==='all')return true;
+  if(filter==='feynman'||filter==='essay')return q.type===filter;
+  if(filter.startsWith('ch'))return q.chapter===parseInt(filter.slice(2));
+  return true;
+}
+
+function renderList(){
+  const list=document.getElementById('list');
+  const items=QS.map((q,i)=>({q,i})).filter(x=>match(x.q));
+  document.getElementById('count').textContent=`顯示 ${items.length} 題`;
+  list.innerHTML=items.map(({q,i})=>`
+    <div class="qcard">
+      <div class="qmeta">
+        <span class="chip ch">CH ${q.chapter}</span>
+        <span class="chip ${q.type}">${q.type==='feynman'?'費曼式':'申論式'}</span>
+        <span class="qtopic">${q.topic||''}</span>
+      </div>
+      <div class="qtext">${q.q}</div>
+      <textarea class="ans" id="ans_${i}" placeholder="在這裡寫下你的答案…" oninput="saveAns(${i},this.value)">${(saved[i]||'').replace(/</g,'&lt;')}</textarea>
+      <div class="qactions">
+        <button class="btn btn-primary" onclick="grade(${i})">產生評分 → 複製並開 ChatGPT</button>
+        <button class="btn btn-ghost" onclick="copyOnly(${i})">只複製</button>
+      </div>
+      <div class="hint" id="hint_${i}">✅ 已複製到剪貼簿，正在開啟 ChatGPT，貼上（Ctrl/Cmd+V）即可</div>
+    </div>`).join('');
+}
+
+function buildText(i){
+  const q=QS[i];
+  const ans=(document.getElementById('ans_'+i).value||'').trim();
+  return `${GRADE_PROMPT}
+
+【題目】（${q.type==='feynman'?'費曼式':'申論式'}・Varian 中階個經 第${q.chapter}章・${q.topic||''}）
+${q.q}
+
+【我的回答】
+${ans||'（尚未作答）'}`;
+}
+
+async function copyText(t){
+  try{await navigator.clipboard.writeText(t);return true;}
+  catch(e){
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');document.body.removeChild(ta);return true;}
+    catch(e2){document.body.removeChild(ta);return false;}
+  }
+}
+
+async function grade(i){
+  const t=buildText(i);
+  await copyText(t);
+  const h=document.getElementById('hint_'+i);h.classList.add('show');
+  setTimeout(()=>{window.open('https://chatgpt.com/','_blank');},400);
+}
+async function copyOnly(i){
+  const t=buildText(i);
+  await copyText(t);
+  const h=document.getElementById('hint_'+i);
+  h.textContent='✅ 已複製到剪貼簿';h.classList.add('show');
+}
+
+renderFilters();renderList();
+</script>
+</body>
+</html>
